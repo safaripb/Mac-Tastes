@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mac Tastes</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#" class="brand">
+        <img src="icon.png" alt="Mac Tastes logo" class="brand-icon" />
+        <div class="brand-text">
+          <h1>Mac Tastes</h1>
+          <p>Campus food rescue at McMaster</p>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#locations">Locations</a>
+        <a href="#impact">Impact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-overlay"></div>
+
+      <div class="container hero-content">
+        <span class="hero-pill">Food rescue · McMaster style</span>
+        <h2>Grab surprise bags from campus favourites before they’re gone.</h2>
+        <p>
+          Browse dining spots, preview menu items, reserve a surprise bag,
+          and see the impact of saving good food on campus.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#locations" class="btn btn-primary">Explore bags</a>
+          <a href="#impact" class="btn btn-secondary">View impact</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="locations" class="locations-section">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Locations</span>
+            <h2>Available surprise bags</h2>
+          </div>
+          <p>
+            Pick a location, preview the kind of food you might get, and reserve your bag.
+          </p>
+        </div>
+
+        <div class="controls">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by location or food..."
+          />
+
+          <select id="sortFilter">
+            <option value="default">Sort by featured</option>
+            <option value="priceLow">Lowest bag price</option>
+            <option value="priceHigh">Highest bag price</option>
+            <option value="distance">Closest first</option>
+          </select>
+        </div>
+
+        <div id="locationsGrid" class="locations-grid"></div>
+      </div>
+    </section>
+
+    <section id="impact" class="impact-section">
+      <div class="container impact-grid">
+        <div>
+          <span class="eyebrow">Impact</span>
+          <h2>Your food rescue contribution</h2>
+          <p>
+            Slide to see your points!
+          </p>
+
+          <div class="impact-slider-box">
+            <label for="bagsSaved">How many bags did you save?</label>
+            <input type="range" id="bagsSaved" min="1" max="40" value="6" />
+            <div class="slider-value">
+              <strong><span id="bagsSavedValue">6</span></strong> bags rescued
+            </div>
+          </div>
+        </div>
+
+        <div class="impact-cards">
+  <div class="impact-card">
+    <span>Campus impact score</span>
+    <strong id="scoreValue">72 pts</strong>
+  </div>
+</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <strong>Mac Tastes</strong>
+        <p>Made as a McMaster-inspired food rescue prototype.</p>
+      </div>
+      <p>Reserve smart. Waste less.</p>
+    </div>
+  </footer>
+
+  <!-- LOCATION / MENU MODAL -->
+  <div id="menuModal" class="modal hidden">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+
+    <div class="modal-panel">
+      <button class="modal-close" id="closeModalBtn" aria-label="Close modal">&times;</button>
+
+      <div class="modal-scroll">
+        <div class="modal-top">
+          <div class="modal-slideshow">
+            <img id="slideImage" src="" alt="Food preview" class="slide-image" />
+
+            <button class="slide-btn slide-btn-left" id="prevSlideBtn" aria-label="Previous image">&#10094;</button>
+            <button class="slide-btn slide-btn-right" id="nextSlideBtn" aria-label="Next image">&#10095;</button>
+
+            <div id="slideDots" class="slide-dots"></div>
+          </div>
+
+          <div class="modal-summary">
+            <span class="modal-badge" id="modalBadge">Featured</span>
+            <h3 id="modalTitle">Location</h3>
+            <p class="modal-hours" id="modalHours"></p>
+            <p class="modal-desc" id="modalDescription"></p>
+
+            <div class="bag-box">
+              <div>
+                <span class="bag-label">Surprise bag</span>
+                <div class="bag-price" id="modalBagPrice">$5.99</div>
+              </div>
+              <div class="bag-side">
+                <span id="modalPickup">Pickup</span>
+                <span id="modalDistance">Distance</span>
+              </div>
+            </div>
+
+            <div class="modal-actions">
+              <button id="reserveNowBtn" class="btn btn-primary">Reserve this bag</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-section">
+          <div class="menu-section-head">
+            <h4>Sample menu</h4>
+            <p>Examples of items you may get in a surprise bag.</p>
+          </div>
+          <div id="menuItems" class="menu-items"></div>
+        </div>
+
+        <div id="reserveSection" class="reserve-section hidden">
+          <div class="menu-section-head">
+            <h4>Reserve your bag</h4>
+            <p>Enter your details to complete the reservation.</p>
+          </div>
+
+          <form id="reserveForm" class="reserve-form">
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="studentName">Full name</label>
+                <input type="text" id="studentName" placeholder="Enter your name" required />
+              </div>
+
+              <div class="form-field">
+                <label for="studentId">Student ID</label>
+                <input type="text" id="studentId" placeholder="Enter student ID" required />
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary reserve-submit-btn">
+              Confirm reservation
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden">
+    <div class="toast-icon">✓</div>
+    <div>
+      <strong>Reserved successfully!</strong>
+      <p id="toastText">Your surprise bag is ready for pickup.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
